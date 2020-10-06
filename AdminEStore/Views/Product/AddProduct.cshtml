@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Product";
+
+}
+
+@model AdminEStore.Models.ProductModel
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Product/GetProductCat",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+                    //alert('hello');
+                    //alert(result[0].CatName);
+
+                    $('#divcateg').empty();
+                    $('#divcateg').append('<select id="dropdowncateg" name="Product_Cat" class = "form-control" ><option value="">-- Select --</option>');
+
+                    for (var i in result) {
+                        // $('#dropdowncat').append('<p>' + result[i].CatName + '</p>');
+                        $('#dropdowncateg').append('<option value="' + result[i].CatId + '">' + result[i].CatName + '</option>');
+                    }
+
+                    $('#divcateg').append('</select>');
+
+                   
+                },
+                error: function (response) {
+                    alert('eror');
+                }
+            });
+
+            //$("#btnsubmit").click(function (e) {
+            //    //Serialize the form datas.   
+            //    //var valdata = $("#friendform").serialize();
+
+            //   // event.preventDefault();
+
+            //    //var pmodel = new ProductModel();
+            //    //pmodel.append("Product_Category", $("#dropdowncateg").val())
+            //    //formData.append("PersonId", $("#PersonId").val());
+            //    //formData.append("Name", $("#Name").val());
+            //    //formData.append("Gender", $("#Gender").val());
+            //    //formData.append("City", $("#City").val());
+
+               
+            //    //to get alert popup   
+            //    alert("Hello");
+
+            //    var product = new Object();
+            //    product.Product_Name = "test";
+            //    product.Product_Price = "101";
+            //   // product.Product_Category = $('#dropdowncateg').val(); 
+
+            //    //alert(product.Product_Category);
+            //    //alert(product.Product_Name);
+
+
+            //    $.ajax({
+            //        url: "/Product/AddProduct",
+            //        type: "POST",
+            //        dataType: "json",
+            //        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            //        data: JSON.stringify(product),
+            //        success: function (data, status) {
+            //            alert(status);
+            //           // alert("This is product name:" + data.Product_Name);
+            //           // alert("Done");
+                     
+                  
+            //        },
+            //        error: function (data) {
+            //        alert('eror');
+            //    }
+            //    });   
+              
+            //    })
+        });
+
+    </script>
+
+
+}
+
+<div class="modal-dialog">
+    @using (Html.BeginForm("AddProduct", null, FormMethod.Post, new { @class = "form-horizontal, needs-validation ", @role = "form", @enctype = "multipart/form-data" }))
+    {
+
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title" id="myModalLabel">Add Product</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="Body" class="col-md-8">* Product Name</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(a => a.Product_Name, new { @class = "form-control input-sm" })
+
+                         @Html.ValidationMessageFor(a => a.Product_Name, "", new { @class = "text-danger" })
+
+                        @*<input id="PName" name="PName" type="text" value="" />*@
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Body" class="col-md-8 control-label">* Product Price</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(a => a.Product_Price, new { @class = "form-control input-sm" })
+                  
+                        @Html.ValidationMessageFor(a => a.Product_Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="Body" class="col-md-8 control-label">* Product Category</label>
+                    <div class="col-md-8" id="divcateg">
+                        @*@Html.DropDownListFor(a => a.Product_Category, new List<SelectListItem> { new SelectListItem{Text="Food", Value="1"},
+                            new SelectListItem{Text="Electronics", Value="2"}}, "Please select",
+                            new { @class = "form-control" })*@
+
+
+                        @*@Html.DropDownListFor(a => a.Product_Category, new SelectList(Model.ListProdCat, Model.Product_Category))*@
+                        @Html.ValidationMessageFor(a => a.Product_Category, "", new { @class = "text-danger" })
+
+                    </div>
+
+                </div>
+
+
+                <!--<div class="form-group">
+                    <label for="Body" class="col-md-8 control-label">* Product Category</label>
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(a => a.Product_Category, new List<SelectListItem> { new SelectListItem{Text="Food", Value="1"},
+        new SelectListItem{Text="Electronics", Value="2"}}, "Please select",
+        new { @class = "form-control" })-->
+
+
+                        @*@Html.DropDownListFor(a => a.Product_Category, new SelectList(Model.ListProdCat, Model.Product_Category))*@
+                        <!--@Html.ValidationMessageFor(a => a.Product_Category, "", new { @class = "text-danger" })
+
+                    </div>
+
+                </div>-->
+
+
+            </div>
+            <div class="modal-footer">
+                <button id ="btnsubmit" type="submit" class="btn btn-primary" style="width:100px">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="width:100px">Close</button>
+            </div>
+        </div>
+    }
+</div>
+

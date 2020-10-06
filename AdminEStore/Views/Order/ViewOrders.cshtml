@@ -1,0 +1,63 @@
+﻿@model IEnumerable<AdminEStore.Models.OrderModel>
+@using AdminEStore.Models
+
+
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:#808080; color:#FFFFFF"><b>Orders List</b></div>
+                <div id="bLeft" class="panel-body">
+                    <table style="padding: 5px; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Product Name</th>
+                                <th>Product Price</th>
+                                <th>Product Catgory</th>
+                                <th>Product Quantity</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (var item in Model)
+                            {
+                                foreach (var itemord in item.ListOrderedProducts)
+
+                                {
+                            <tr>
+                                <td style="width:25%"> @Html.DisplayTextFor(z => itemord.Order_Id)</td>
+                                <td style="width:25%"> @Html.DisplayTextFor(z => itemord.Ordproduct.Product_Name)</td>
+                                <td style="width:25%">@Html.DisplayTextFor(z => itemord.Ordproduct.Product_Price) </td>
+                                <td style="width:25%">@Html.DisplayTextFor(z => itemord.Ordproduct.Product_CatName) </td>
+                                <td style="width:30%">@Html.DisplayTextFor(z => itemord.Product_Quantity) </td>
+
+                                @* <td style="width:15%">@Html.DropDownListFor(z => item.Approver_Decision, new SelectList(Model.ApprovalLookup, item.Approver_Decision), new { Class = "form-control" })</td> *@
+
+                                @*<td style="width:20%">
+            <a id="akey" class="allkeys"><img id="imgkey" src="~/Images/key_plus.png" /></a>
+            <span id="appnote" class="appnotes"> </span>
+
+        </td>*@
+                            </tr>
+
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-footer" style="text-align:right">
+                    @*<span><input type="submit" value="submit" class="btn btn-default btn-sl active" /></span>*@
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+}
